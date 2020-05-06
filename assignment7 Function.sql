@@ -71,22 +71,23 @@ BEGIN
 END;
 
 ---- 
+DROP TABLE EMP;
 CREATE TABLE EMP (
     ENO NUMBER(4)
 );
 
 INSERT INTO EMP VALUES(1);
 INSERT INTO EMP VALUES(2);
-
+INSERT INTO EMP VALUES(3);
 DECLARE 
-    FUNCTION TOTAL_EMO RETURN NUMBER IS
+    FUNCTION TOTAL_EMP RETURN NUMBER IS
     TOTAL NUMBER;
     BEGIN 
     SELECT COUNT(*) INTO TOTAL FROM EMP;
-    RETURN(TOTAL)
+    RETURN(TOTAL);
     END;
 begin
-  DBMS_OUTPUT.PUT_LINE('TOTAL NUMBER OF EMPLOYEES'|| TOTAL_EMP())
+  DBMS_OUTPUT.PUT_LINE('TOTAL NUMBER OF EMPLOYEES : '|| TOTAL_EMP());
 end;
 
 -- TOTAL NUMBER OF EMPLOYEES IN TABLE
@@ -137,13 +138,14 @@ begin
   SELECT sum(salary) into total_salary from emp where deptno=deptno;
   RETURN (total_salary);
 end;
+DROP TABLE EMP;
 CREATE TABLE EMP(
     eno number(3) primary key,
     ename varchar(20),
     job varchar(20),
     salary number(9),
     deptno number(2)
-)
+);
 
 INSERT INTO EMP VALUES(1, 'RAM', 'PROF',200,10);
 INSERT INTO EMP VALUES(2, 'SHYAM', 'PROF',970,20);
@@ -183,4 +185,35 @@ Declare
 begin
   N:= fire_employee(20);
   DBMS_OUTPUT.PUT_LINE('Number of Records Deleted ' || N);
+end;
+
+
+DROP TABLE EMP;
+CREATE TABLE EMP(
+    eno number(3) primary key,
+    ename varchar(20),
+    job varchar(20),
+    salary number(9),
+    deptno number(2)
+);
+
+INSERT INTO EMP VALUES(1, 'RAM', 'PROF',200,10);
+INSERT INTO EMP VALUES(2, 'SHYAM', 'PROF',970,20);
+INSERT INTO EMP VALUES(3, 'RJ', 'ASSOC PROF',450,10);
+
+CREATE OR REPLACE FUNCTION SALARY (dno NUMBER)
+RETURN NUMBER IS
+total_salary NUMBER;
+begin
+  SELECT sum(salary) into total_salary from emp where deptno=deptno;
+  RETURN (total_salary);
+end;
+
+DECLARE 
+    D NUMBER;
+    total_salary number;
+begin
+  D:=10;
+  total_salary:=SALARY(D);
+  DBMS_OUTPUT.PUT_LINE('Salary of Department Number '|| d || ' is ' || total_salary);
 end;
